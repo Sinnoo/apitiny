@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+
+namespace Api;
+
+/*
+ * 内置工具 包含 项目初始化、构建、发布
+ */
+
+use Api\Kernel\Console;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+
+use Api\Console\BuiltInTool\Init;
+use Api\Console\BuiltInTool\Build;
+use Api\Console\BuiltInTool\Publish;
+
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    include __DIR__ . '/../vendor/autoload.php';
+} else {
+    include __DIR__ . '/../../../autoload.php';
+}
+
+$application = new Console();
+$application->add(new Init());
+$application->add(new Build());
+$application->add(new Publish());
+$application->run();

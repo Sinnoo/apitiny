@@ -1,0 +1,13 @@
+#!/usr/local/web2016/php7.1/bin/php
+<?php
+
+namespace Api;
+
+use Api\Kernel\Console;
+
+/**
+ * Console执行入口
+ */
+include __DIR__ . '/../vendor/autoload.php';
+
+Console::router()->run();

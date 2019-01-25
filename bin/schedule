@@ -1,0 +1,19 @@
+#!/usr/local/web2016/php7.1/bin/php
+<?php
+
+namespace Api;
+
+use Api\Kernel\Console;
+
+/**
+ * 任务调度定义
+ */
+include __DIR__ . '/../vendor/autoload.php';
+
+$console  = new Console();
+$schedule = $console->schedule();
+
+# 注释说明
+#$schedule->command('bin/console App:Test cc')->inTime('* * * * *');
+
+$console->run();

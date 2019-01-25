@@ -1,0 +1,40 @@
+{
+    "repositories": {
+        "mx2": {
+            "type": "vcs",
+            "url": "git@git.imoxiu.cn:web_dev/mx.git"
+        },
+        "utility": {
+            "type": "vcs",
+            "url": "git@git.imoxiu.cn:web_dev/mx_utility.git"
+        },
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    },
+    "name": "songmingshuo/api",
+    "description": "A Mx2 Project.",
+    "license": "proprietary",
+    "author": [
+        {
+            "name": "songmingshuo",
+            "email": "songmingshuo@moxiu.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Api\\": "app/api/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6.10",
+        "symfony/console": "3.1.1",
+        "smarty/smarty": "3.1.28",
+        "dragonmantank/cron-expression": "2.2.0",
+        "mongodb/mongodb": "^1.1.0",
+        "web_dev/mx_utility": "dev-master",
+        "web_dev/mx": "2.2.*"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "private": true,
+    "scripts": {
+        "build": "gulp",
+        "dev": "gulp watch"
+    },
+    "devDependencies": {
+        "gulp": "^3.9.1",
+        "gulp-less": "^3.1.0"
+    }
+}
