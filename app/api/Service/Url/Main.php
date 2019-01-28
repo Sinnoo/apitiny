@@ -59,6 +59,7 @@ class Main extends ServiceAbstract
                 }
             }
         }
+        $result['list'] = array_values($result['list']);
         return $result;
     }
 
