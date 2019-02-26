@@ -14,7 +14,10 @@ use Mx\Service\ServiceAbstract;
  */
 class Main extends ServiceAbstract
 {
-    protected $deParams = [];
+    protected $deParams = [
+        'sort' => 'order',
+        'desc' => 'ASC',
+    ];
 
     protected function execute()
     {
@@ -69,6 +72,7 @@ class Main extends ServiceAbstract
         try {
             return $biz->dao()
                 ->page(1, 200)
+                ->order($this->sort, $this->desc)
                 ->find($this->query);
         } catch (\Exception $e) {
             throw new \Exception('新增失败');

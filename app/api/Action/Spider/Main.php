@@ -63,12 +63,21 @@ class Main extends ActionAbstract
     {
         $data = $this->getCurl();
         if ($data) {
-            if ((int)$data['code'] !== 0) {
-                if ($data['code'] != 200) {
-                    return $this->fault(403, $data['message']);
+            if ($this->validatedData['app'] == 'edu') {
+                #爱特辅导
+                if ($data['retcode'] === 2000000) {
+                    $this->getResponse($data);
+                    return $data;
                 }
-                $this->getResponse($data['data']);
-                return $data['data'];
+            } elseif ($this->validatedData['app'] != 'edu') {
+                #魔秀自有APP
+                if ((int)$data['code'] !== 0) {
+                    if ($data['code'] != 200) {
+                        return $this->fault(403, $data['message']);
+                    }
+                    $this->getResponse($data['data']);
+                    return $data['data'];
+                }
             }
         }
         #不是成功,不是失败,返回原内容;
@@ -112,31 +121,35 @@ class Main extends ActionAbstract
             $result[$key] = array(
                 'name' => $key,
                 'desc' => '',
-                'case' => '',
+                'case' => (string)$value,
                 'type' => gettype($value),
             );
             if (is_array($value)) {
+                if (array_keys($value)[0] === 0) {
+                    $value = $value[0];
+                }
+                $loop = 0;
                 foreach ($value as $key2 => $value2) {
-                    if (is_int($key2)) {
-                        if ($key2 === 0) {
-                            #是一个数组,只要数组的第一个对象就好
-                            foreach ($value2 as $key3 => $value3) {
-                                $result[$key]['responseData'][] = array(
-                                    'name' => $key3,
-                                    'desc' => '',
-                                    'case' => (string)$value3,
-                                    'type' => gettype($value3),
-                                );
-                            }
+                    $result[$key]['responseData'][$loop] = array(
+                        'name' => $key2,
+                        'desc' => '',
+                        'case' => (string)$value2,
+                        'type' => gettype($value2),
+                    );
+                    if (is_array($value2)) {
+                        if (array_keys($value2)[0] === 0) {
+                            $value2 = $value2[0];
                         }
-                    } elseif (!is_int($key2)) {
-                        $result[$key]['responseData'][] = array(
-                            'name' => $key2,
-                            'desc' => '',
-                            'case' => (string)$value2,
-                            'type' => gettype($value2),
-                        );
+                        foreach ($value2 as $key3 => $value3) {
+                            $result[$key]['responseData'][$loop]['responseData'][] = array(
+                                'name' => $key3,
+                                'desc' => '',
+                                'case' => (string)$value3,
+                                'type' => gettype($value3),
+                            );
+                        }
                     }
+                    $loop++;
                 }
             }
         }

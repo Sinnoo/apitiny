@@ -21,7 +21,7 @@ class Add extends ServiceAbstract
         $biz = new \Api\Biz\Url();
         try {
             return (string)$biz->dao()
-                ->update($this->query, $this->update, ['upsert' => true]);
+                ->update($this->query, $this->update, ['upsert' => true, 'multiple' => true]);
         } catch (\Exception $e) {
             throw new \Exception('新增失败');
         }
