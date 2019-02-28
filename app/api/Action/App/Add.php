@@ -71,14 +71,47 @@ class Add extends ActionAbstract
      */
     protected function doAdd()
     {
+        if ($this->isExist()) {
+            return $this->fault(403, '应用标记已经存在,请更换');
+        }
         $this->validatedData['utime'] = time();
         try {
             return $this->callService(
                 'App\\Add',
-                ['update' => $this->validatedData]
+                ['update' => $this->validatedData,
+                'query' => $this->genQuery()]
             );
         } catch (\Exception $e) {
             return $this->fault(403, $e->getMessage());
         }
+    }
+
+    protected function genQuery()
+    {
+        $query = [];
+        if ($this->validatedData['id']) {
+            $query['id'] = $this->validatedData['id'];
+        }
+        return $query;
+    }
+
+    /*
+     * 判断应用是否存在
+     *
+     * @return bool
+     */
+    protected function isExist()
+    {
+        if ($this->validatedData['id']) {
+            return false;
+        }
+        $one = $this->callService(
+            'App\\One',
+            ['query' => ['mark' => $this->validatedData['mark']]]
+        );
+        if ($one->id) {
+            return true;
+        }
+        return false;
     }
 }

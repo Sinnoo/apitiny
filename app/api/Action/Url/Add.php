@@ -91,8 +91,8 @@ class Add extends ActionAbstract
                 'value' => $this->validatedData['value'],
                 'title' => $this->validatedData['title'],
                 'desc' => $this->validatedData['desc'],
-                'mark' => $this->validatedData['mark'],
-                'type' => $this->validatedData['type'],
+                'mark' => (string)$this->validatedData['mark'],
+                'type' => (string)$this->validatedData['type'],
                 'utime' => time(),
             );
             foreach ($path as $key => $value) {
