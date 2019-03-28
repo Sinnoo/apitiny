@@ -215,6 +215,7 @@ class Main extends ActionAbstract
                     $content = file_get_contents($value['case']);
                     file_put_contents($file, $content);
                     $params[$value['name']] = new \CURLFile($file);
+                    $params[$value['name']]->mime = 'image/jpeg';
                 }
             }
         }
